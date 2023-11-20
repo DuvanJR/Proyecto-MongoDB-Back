@@ -5,8 +5,9 @@ const commentsSchema = new mongoose.Schema({
     dislike: { type: Boolean, default: 0 },
     fecha: { type: Date, default: Date.now },
     comentario: { type: String, required: true },
-    universityName: { type: String, required: true }
-
+    universityName: { type: String, required: true },
+    idUniversity: { type: Number, default: 0},
+    usuario: {type: String, required: true}
 });
 
 const Comments = mongoose.model('Comments', commentsSchema);

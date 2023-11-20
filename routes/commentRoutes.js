@@ -9,7 +9,8 @@ router.use(bodyParser.json());
 router.post('/comments', async (req, res) => {
   try {
     const { like, dislike, fecha, comentario, universityName } = req.body;
-    const newComment = new Comment({ like, dislike, fecha, comentario, universityName });
+    const newComment = new Comment({ like, dislike, fecha, comentario, universityName, 
+      idUniversity, usuario});
     await newComment.save();
     res.status(201).json({ message: 'Comentario creado exitosamente', comment: newComment });
   } catch (err) {
