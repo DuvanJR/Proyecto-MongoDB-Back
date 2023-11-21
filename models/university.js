@@ -5,7 +5,8 @@ const universitySchema = new mongoose.Schema({
     description: String,
     img: String,
     city: String,
-    idUniversity: Number
+    idUniversity: Number,
+    visits: { type: Number, default: 0 },
 });
 
 const University = mongoose.model('University', universitySchema);
