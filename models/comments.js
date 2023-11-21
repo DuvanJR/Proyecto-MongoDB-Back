@@ -6,7 +6,7 @@ const commentsSchema = new mongoose.Schema({
     fecha: { type: Date, default: Date.now },
     comentario: { type: String, required: true },
     universityName: { type: String, required: true },
-    idUniversity: { type: Number, default: 0},
+    idUniversity: { type: Number},
     usuario: {type: String, required: true}
 });
 

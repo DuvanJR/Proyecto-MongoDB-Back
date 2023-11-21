@@ -6,7 +6,7 @@ const router = express.Router();
 router.use(bodyParser.json());
 
 // Ruta para aumentar las visitas
-router.post('/:id/visitas', async (req, res) => {
+router.post('/:idUniversity/visitas', async (req, res) => {
   try {
     const detalle = await Detalle.findById(req.params.id);
 

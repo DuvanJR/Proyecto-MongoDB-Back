@@ -8,9 +8,8 @@ router.use(bodyParser.json());
 // Ruta para obtener todos los datos de University
 router.post('/comments', async (req, res) => {
   try {
-    const { like, dislike, fecha, comentario, universityName } = req.body;
-    const newComment = new Comment({ like, dislike, fecha, comentario, universityName, 
-      idUniversity, usuario});
+    const { like, fecha, comentario, universityName,idUniversity, usuario } = req.body;
+    const newComment = new Comment({ like, fecha, comentario, universityName, idUniversity, usuario});
     await newComment.save();
     res.status(201).json({ message: 'Comentario creado exitosamente', comment: newComment });
   } catch (err) {
@@ -20,13 +19,16 @@ router.post('/comments', async (req, res) => {
 
 // Ruta para obtener todos los comentarios
 
-router.get('/comments', async (req, res) => {
+router.get('/comments/:idUniversity', async (req, res) => {
   try {
-    const comments = await Comment.find();
+    const idUniversity = req.params.idUniversity;
+    const comments = await Comment.find({ idUniversity: idUniversity });
     res.status(200).json(comments);
   } catch (err) {
     res.status(500).json({ message: 'Error al obtener los comentarios', error: err.message });
   }
 });
+
+
 
 module.exports = router;

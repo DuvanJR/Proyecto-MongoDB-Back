@@ -19,6 +19,7 @@ db.once('open', () => console.log('Conectado a la base de datos'));
 // Rutas
 app.use('/api', universityRoutes);
 app.use('/api', commentRoutes);
+// app.use('/api', detalleRoutes);
 // Iniciar el servidor
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
