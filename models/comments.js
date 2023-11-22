@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const commentsSchema = new mongoose.Schema({
-    like: { type: Boolean, default: 0 },
+    like: { type: Boolean, default: false },
     fecha: { type: Date, default: Date.now },
     comentario: { type: String, required: true },
     universityName: { type: String, required: true },

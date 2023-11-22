@@ -29,6 +29,35 @@ router.get('/comments/:idUniversity', async (req, res) => {
   }
 });
 
+router.post('/comments/:usuario/:like', async (req, res) => {
+  try {
+    const { usuario, like } = req.params;
+
+    // Encuentra el comentario por su usuario
+    const comment = await Comment.findOne({ usuario });
+
+    if (!comment) {
+      return res.status(404).json({ message: 'Comentario no encontrado' });
+    }
+
+    // Convierte el valor del parámetro like a un booleano
+    const likeValue = like === 'true';
+
+    // Actualiza el campo like con el valor proporcionado
+    comment.like = likeValue;
+
+    // Si deseas, también puedes reiniciar el campo dislikes
+    comment.dislikes = !likeValue;
+
+    // Guarda el comentario actualizado
+    await comment.save();
+
+    res.json({ like: comment.like });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error interno del servidor' });
+  }
+});
 
 
 module.exports = router;
