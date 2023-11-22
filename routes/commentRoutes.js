@@ -18,7 +18,6 @@ router.post('/comments', async (req, res) => {
 });
 
 // Ruta para obtener todos los comentarios
-
 router.get('/comments/:idUniversity', async (req, res) => {
   try {
     const idUniversity = req.params.idUniversity;
@@ -29,6 +28,7 @@ router.get('/comments/:idUniversity', async (req, res) => {
   }
 });
 
+// Ruta para el estado del like /true - false
 router.post('/comments/:usuario/:like', async (req, res) => {
   try {
     const { usuario, like } = req.params;
@@ -43,7 +43,7 @@ router.post('/comments/:usuario/:like', async (req, res) => {
     // Convierte el valor del parámetro like a un booleano
     const likeValue = like === 'true';
 
-    // Actualiza el campo like con el valor proporcionado
+    // Cambia el valor del campo like al valor proporcionado
     comment.like = likeValue;
 
     // Si deseas, también puedes reiniciar el campo dislikes
