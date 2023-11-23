@@ -13,6 +13,26 @@ router.get('/universities', async (req, res) => {
   }
 });
 
+
+// Ruta para obtener universidades por ciudad
+router.get('/universitiesByCity/:ciudad', async (req, res) => {
+  try {
+    const ciudad = req.params.ciudad;
+    if (!ciudad) {
+      return res.status(400).json({ message: 'Por favor, proporcione una ciudad para filtrar las universidades.' });
+    }
+    const universities = await University.find({ city: ciudad });
+    if (universities.length === 0) {
+      return res.status(404).json({ message: 'No se encontraron universidades para la ciudad proporcionada.' });
+    }
+    res.json(universities);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+
+
 // Ruta para obtener el total de visitas de una universidad por su IdUniversity
 router.get('/universities/:idUniversity/visits', async (req, res) => {
   try {
