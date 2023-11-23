@@ -5,15 +5,14 @@ const bodyParser = require('body-parser');
 const Comment = require('../models/comments');
 router.use(bodyParser.json());
 
+
 // Ruta para crear comentarios
 router.post('/comments', async (req, res) => {
   try {
     const { like, fecha, comentario, universityName,idUniversity, usuario } = req.body;
     const newComment = new Comment({ like, fecha, comentario, universityName, idUniversity, usuario});
-    console.log(newComment)
     await newComment.save();
     res.status(201).json({ message: 'Comentario creado exitosamente', comment: newComment });
-    console.log(newComment)
   } catch (err) {
     res.status(400).json({ message: 'Error al crear el comentario', error: err.message });
   }
@@ -31,17 +30,16 @@ router.get('/comments', async (req, res) => {
 });
 
 
-// Ruta para obtener los comentarios por id
+// Ruta para obtener comentarios por idUniversity - ascendente
 router.get('/comments/:idUniversity', async (req, res) => {
   try {
     const idUniversity = req.params.idUniversity;
-    const comments = await Comment.find({ idUniversity: idUniversity });
+    const comments = await Comment.find({ idUniversity: idUniversity }).sort({ fecha: -1 });
     res.status(200).json(comments);
   } catch (err) {
     res.status(500).json({ message: 'Error al obtener los comentarios', error: err.message });
   }
 });
-
 
 
 // Ruta para el estado del like /true - false
@@ -62,12 +60,10 @@ router.post('/comments/:usuario/:like', async (req, res) => {
     // Cambia el valor del campo like al valor proporcionado
     comment.like = likeValue;
 
-    // Si deseas, también puedes reiniciar el campo dislikes
+    // cambia el estado a dislike - false
     comment.dislikes = !likeValue;
 
-    // Guarda el comentario actualizado
     await comment.save();
-
     res.json({ like: comment.like });
   } catch (error) {
     console.error(error);
